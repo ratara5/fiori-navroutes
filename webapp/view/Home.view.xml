@@ -5,6 +5,7 @@
     <Panel headerText="{i18n>homePageTitle}" class="sapUiResponsiveContentPadding"> <!--Cambiado el atributo title por headerText-->
         <content>
             <Button id="displayNotFoundBtn" text="{i18n>displayNotFound}" press=".onDisplayNotFound" class="sapUiTinyMarginEnd"/>
+            <Button id="employeeListBtn" text="{i18n>showEmployeeList}" press=".onNavToEmployees" class="sapUiTinyMarginEnd"/>
         </content>
     </Panel>
 </mvc:View>
