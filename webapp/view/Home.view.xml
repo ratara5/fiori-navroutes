@@ -4,7 +4,7 @@
     xmlns:mvc="sap.ui.core.mvc">
     <Panel headerText="{i18n>homePageTitle}" class="sapUiResponsiveContentPadding"> <!--Cambiado el atributo title por headerText-->
         <content>
-            <Button text="{i18n>iWantToNavigate}" class="sapUiTinyMarginEnd"/>
+            <Button id="displayNotFoundBtn" text="{i18n>displayNotFound}" press=".onDisplayNotFound" class="sapUiTinyMarginEnd"/>
         </content>
     </Panel>
 </mvc:View>
