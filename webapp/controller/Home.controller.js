@@ -13,6 +13,10 @@ sap.ui.define([
 
         onNavToEmployees: function(){
             this.getOwnerComponent().getRouter().navTo("employeeList");
+        },
+
+        onNavToEmployeeOverview: function(){
+            this.getOwnerComponent().getRouter().navTo("employeeOverview");
         }
     });
 }); 
