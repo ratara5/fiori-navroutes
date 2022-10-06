@@ -6,6 +6,7 @@
                     <Toolbar>
                         <Title text="{i18n>employeeIDColon} {EmployeeID}" level="H2"/>
                         <ToolbarSpacer/>
+                        <Link text="{i18n>flipToResume}" tooltip="{i18n>flipToResume.tooltip}" press=".onShowResume"/>
                     </Toolbar>
                 </headerToolbar>
                 <content>

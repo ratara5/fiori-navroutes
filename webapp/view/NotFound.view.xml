@@ -6,5 +6,5 @@
     text="{i18n>notFound.text}"
     description="{i18n>notFound.description}"
     showNavButton="true"
-    navButtonPress="onNavBack"/>
+    navButtonPress=".onNavBack"/>
 </mvc:View>
