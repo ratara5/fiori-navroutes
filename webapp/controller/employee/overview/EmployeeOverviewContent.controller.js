@@ -16,29 +16,58 @@ sap.ui.define([
     "use strict";
     return BaseController.extend("sap.ui.demo.nav.controller.employee.overview.EmployeeOverviewContent",{
         onInit: function(){
+            var oRouter=this.getOwnerComponent().getRouter();
+
             this._oTable=this.byId("employeesTable");
             this._oVSD=null;
             this._sSortField=null;
             this._bSortDescending=false;
             this._aValidSortFields=["EmployeeID", "FirstName", "LastName"];
             this._sSearchQuery=null;
+            this._oRouterArgs=null;
 
             this._initViewSettingsDialog();
+
+            //make the search bookmarkable
+            oRouter.getRoute("employeeOverview").attachMatched(this._onRouteMatched, this);
         },
 
-        onSortButtonPressed: function(){
+        _onRouteMatched:function(oEvent){
+            //save the current query state
+            this._oRouterArgs=oEvent.getParameter("arguments");
+            this._oRouterArgs["?query"]=this._oRouterArgs["?query"] || {};
+            var oQueryParameter=this._oRouterArgs["?query"];
+            console.log(oQueryParameter);
+
+            //search filter vía URL hash
+            this._applySearchFilter(oQueryParameter.search);
+
+            //sorting via URL hash
+            this._applySorter(oQueryParameter.sortField, oQueryParameter.sortDescending);
+        },
+
+        onSortButtonPressed: function(oEvent){
             this._oVSD.open();
         },
 
         onSearchEmployeesTable: function(oEvent){
-            this._applySearchFilter(oEvent.getSource().getValue());
+            //this._applySearchFilter(oEvent.getSource().getValue());
+            var oRouter=this.getOwnerComponent().getRouter();
+
+            //update the hash with the current search term
+            this._oRouterArgs["?query"].search=oEvent.getSource().getValue();
+            oRouter.navTo("employeeOverview", this._oRouterArgs, true /*No history*/)
         },
 
         _initViewSettingsDialog: function(){
+            var oRouter = this.getOwnerComponent().getRouter();
             this._oVSD=new ViewSettingsDialog("vsd",{
                 confirm: function(oEvent){
                     var oSortItem=oEvent.getParameter("sortItem");
-                    this._applySorter(oSortItem.getKey(), oEvent.getParameter("sortDescending"));
+                    //this._applySorter(oSortItem.getKey(), oEvent.getParameter("sortDescending"));
+                    this._oRouterArgs["?query"].sortField=oSortItem.getKey();
+                    this._oRouterArgs["?query"].sortDescending=oEvent.getParameter("sortDescending");
+                    oRouter.navTo("employeeOverview", this._oRouterArgs, true /*Without history*/)
                 }.bind(this)
             });
 
